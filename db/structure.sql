@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -120,6 +121,70 @@ CREATE SEQUENCE category_translations_id_seq
 --
 
 ALTER SEQUENCE category_translations_id_seq OWNED BY category_translations.id;
+
+
+--
+-- Name: languages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE languages (
+    id integer NOT NULL,
+    name character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: languages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE languages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: languages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE languages_id_seq OWNED BY languages.id;
+
+
+--
+-- Name: linguistic_abilities; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE linguistic_abilities (
+    id integer NOT NULL,
+    profile_id integer,
+    language_id integer,
+    main boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: linguistic_abilities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE linguistic_abilities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: linguistic_abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE linguistic_abilities_id_seq OWNED BY linguistic_abilities.id;
 
 
 --
@@ -358,6 +423,20 @@ ALTER TABLE ONLY category_translations ALTER COLUMN id SET DEFAULT nextval('cate
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY languages ALTER COLUMN id SET DEFAULT nextval('languages_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY linguistic_abilities ALTER COLUMN id SET DEFAULT nextval('linguistic_abilities_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY medialinks ALTER COLUMN id SET DEFAULT nextval('medialinks_id_seq'::regclass);
 
 
@@ -411,6 +490,22 @@ ALTER TABLE ONLY categories_tags
 
 ALTER TABLE ONLY category_translations
     ADD CONSTRAINT category_translations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY languages
+    ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: linguistic_abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY linguistic_abilities
+    ADD CONSTRAINT linguistic_abilities_pkey PRIMARY KEY (id);
 
 
 --
@@ -534,7 +629,16 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 -- Name: _RETURN; Type: RULE; Schema: public; Owner: -
 --
 
-CREATE RULE "_RETURN" AS ON SELECT TO searches DO INSTEAD SELECT profiles.id AS profile_id, array_to_string(ARRAY[profiles.firstname, profiles.lastname, profiles.languages, profiles.city, (string_agg(DISTINCT medialinks.title, ' '::text))::character varying, (string_agg(DISTINCT medialinks.description, ' '::text))::character varying, (string_agg(DISTINCT profile_translations.bio, ' '::text))::character varying, (string_agg(DISTINCT (profile_translations.main_topic)::text, ' '::text))::character varying, (string_agg(DISTINCT (tags.name)::text, ' '::text))::character varying], ' '::text) AS search_field FROM ((((profiles LEFT JOIN medialinks ON ((medialinks.profile_id = profiles.id))) LEFT JOIN profile_translations ON ((profile_translations.profile_id = profiles.id))) LEFT JOIN taggings ON ((taggings.taggable_id = profiles.id))) LEFT JOIN tags ON ((tags.id = taggings.tag_id))) WHERE (profiles.published = true) GROUP BY profiles.id;
+CREATE RULE "_RETURN" AS
+    ON SELECT TO searches DO INSTEAD  SELECT profiles.id AS profile_id,
+    array_to_string(ARRAY[profiles.firstname, profiles.lastname, profiles.languages, profiles.city, (string_agg(DISTINCT medialinks.title, ' '::text))::character varying, (string_agg(DISTINCT medialinks.description, ' '::text))::character varying, (string_agg(DISTINCT profile_translations.bio, ' '::text))::character varying, (string_agg(DISTINCT (profile_translations.main_topic)::text, ' '::text))::character varying, (string_agg(DISTINCT (tags.name)::text, ' '::text))::character varying], ' '::text) AS search_field
+   FROM ((((profiles
+   LEFT JOIN medialinks ON ((medialinks.profile_id = profiles.id)))
+   LEFT JOIN profile_translations ON ((profile_translations.profile_id = profiles.id)))
+   LEFT JOIN taggings ON ((taggings.taggable_id = profiles.id)))
+   LEFT JOIN tags ON ((tags.id = taggings.tag_id)))
+  WHERE (profiles.published = true)
+  GROUP BY profiles.id;
 
 
 --
@@ -602,3 +706,7 @@ INSERT INTO schema_migrations (version) VALUES ('20140901194313');
 INSERT INTO schema_migrations (version) VALUES ('20140901194314');
 
 INSERT INTO schema_migrations (version) VALUES ('20140901194315');
+
+INSERT INTO schema_migrations (version) VALUES ('20140919084814');
+
+INSERT INTO schema_migrations (version) VALUES ('20140919085507');
