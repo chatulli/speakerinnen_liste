@@ -199,7 +199,8 @@ en:
       firstname: "Firstname"
       lastname: "Lastname"
       main_topic: "Main topic"
-      languages: "Languages"
+      main_language: "Main language"
+      other_languages: "Other languages"
       city_region: "City/Region"
       twitter: "Twitter"
       website: "Website"
@@ -209,6 +210,7 @@ en:
       password: "Password"
       password_confirmation: "Password confirmation"
       topics: "Topics"
+      language_selection: "Select language"
       more_topics: "More topics"
       medialinks: "Media links"
       link:
@@ -234,7 +236,8 @@ en:
       firstname: 'First name:'
       lastname: 'Last name:'
       topics: "My topics:"
-      languages: "My languages:"
+      main_language: "Main lanuage:"
+      other_languages: "Other languages"
       talks: "Previous Talks:"
       media: "Examples of previous talks:"
       bio: "Bio:"

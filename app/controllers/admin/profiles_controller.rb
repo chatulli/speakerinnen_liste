@@ -20,6 +20,11 @@ class Admin::ProfilesController < Admin::BaseController
 
   def update
     @profile = Profile.find(params[:id])
+    @profile.linguistic_abilities.clear
+    params[:other_languages].each do |name|
+      language = Language.find_or_create_by_name(name)
+      @profile.linguistic_abilities.create language_id: language.id
+    end
     if @profile.update_attributes(params[:profile])
       redirect_to admin_profile_path(@profile), notice: (I18n.t("flash.profiles.updated"))
     else

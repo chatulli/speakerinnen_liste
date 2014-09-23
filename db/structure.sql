@@ -265,7 +265,7 @@ CREATE TABLE profiles (
     firstname character varying(255),
     lastname character varying(255),
     email character varying(255),
-    languages character varying(255),
+    main_language character varying(255),
     city character varying(255),
     twitter character varying(255),
     picture character varying(255),
@@ -631,7 +631,7 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 CREATE RULE "_RETURN" AS
     ON SELECT TO searches DO INSTEAD  SELECT profiles.id AS profile_id,
-    array_to_string(ARRAY[profiles.firstname, profiles.lastname, profiles.languages, profiles.city, (string_agg(DISTINCT medialinks.title, ' '::text))::character varying, (string_agg(DISTINCT medialinks.description, ' '::text))::character varying, (string_agg(DISTINCT profile_translations.bio, ' '::text))::character varying, (string_agg(DISTINCT (profile_translations.main_topic)::text, ' '::text))::character varying, (string_agg(DISTINCT (tags.name)::text, ' '::text))::character varying], ' '::text) AS search_field
+    array_to_string(ARRAY[profiles.firstname, profiles.lastname, profiles.main_language, profiles.city, (string_agg(DISTINCT medialinks.title, ' '::text))::character varying, (string_agg(DISTINCT medialinks.description, ' '::text))::character varying, (string_agg(DISTINCT profile_translations.bio, ' '::text))::character varying, (string_agg(DISTINCT (profile_translations.main_topic)::text, ' '::text))::character varying, (string_agg(DISTINCT (tags.name)::text, ' '::text))::character varying], ' '::text) AS search_field
    FROM ((((profiles
    LEFT JOIN medialinks ON ((medialinks.profile_id = profiles.id)))
    LEFT JOIN profile_translations ON ((profile_translations.profile_id = profiles.id)))
@@ -710,3 +710,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140901194315');
 INSERT INTO schema_migrations (version) VALUES ('20140919084814');
 
 INSERT INTO schema_migrations (version) VALUES ('20140919085507');
+
+INSERT INTO schema_migrations (version) VALUES ('20140923090742');

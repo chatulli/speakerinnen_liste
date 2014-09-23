@@ -16,6 +16,10 @@ module ProfilesHelper
     return '<span class="valuelabel">'+value.to_s+'</span>'
   end
 
+  def format_languages(languages)
+    languages.map do |code| Language::LANGUAGES[I18n.locale][code] end.join(", ")
+  end
+
   def mark_input_quality(model, symbol)
     return (model.errors[symbol] && model.errors[symbol].length > 0) ? ' incorrect-input' : ''
   end

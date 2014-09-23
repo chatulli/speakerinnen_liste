@@ -18,11 +18,11 @@
 
     <div class="span8 text-profile">
         <h5><%= t(:firstname, scope: "profiles.profile") %></h5>
-        <span><%= @profile.firstname if @profile.firstname %></span>
+        <span><%= @profile.firstname %></span>
         <hr>
 
         <h5><%= t(:lastname, scope: "profiles.profile") %></h5>
-        <span><%= @profile.lastname if @profile.lastname %></span>
+        <span><%= @profile.lastname  %></span>
         <hr>
 
         <h5><%= t(:twitter, scope: "profiles.profile") %></h5>
@@ -30,7 +30,7 @@
         <hr>
 
         <h5><%= t(:email, scope: "profiles.profile") %></h5>
-        <span><%= @profile.email if @profile.email %></span>
+        <span><%= @profile.email %></span>
         <hr>
 
         <h5><%= t(:website, scope: "profiles.profile") %></h5>
@@ -41,12 +41,16 @@
         <span><%= raw @profile.topic_list.map { |t| link_to t, topic_path(t) }.join('  ') %></span>
         <hr>
 
-        <h5><%= t(:languages, scope: "profiles.profile") %></h5>
-        <span> <%= @profile.languages if @profile.languages %></span>
+        <h5><%= t(:main_language, scope: "profiles.profile") %></h5>
+        <span> <%= @profile.main_language %></span>
+        <hr>
+
+        <h5><%= t(:other_languages, scope: "profiles.profile") %></h5>
+        <span> <%= format_languages @profile.other_languages %></span>
         <hr>
 
         <h5><%= t(:city, scope: "profiles.profile") %></h5>
-        <span> <%= @profile.city if @profile.city %></span>
+        <span> <%= @profile.city %></span>
         <hr>
     </div>
   </div>

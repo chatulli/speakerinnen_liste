@@ -33,10 +33,8 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
 
     if @profile.published? or can_edit_profile?(current_profile, @profile)
-
       @message = Message.new
       @medialinks = @profile.medialinks.order(:position)
-
     else
       redirect_to profiles_url, notice: (I18n.t("flash.profiles.show_no_permission"))
     end
@@ -56,9 +54,8 @@ class ProfilesController < ApplicationController
 
   def update
     @profile = Profile.find(params[:id])
-    medialinks = params[:medialinks]
+    medialinks = params[:medialinks] || []
     all_medialinks_saved_successfully = true
-    binding.pry
     medialinks.each_with_index do |medialink, position|
       medialink[:position] = position
       if medialink[:id]
@@ -70,6 +67,12 @@ class ProfilesController < ApplicationController
           all_medialinks_saved_successfully = false
         end
       end
+    end
+
+    @profile.linguistic_abilities.clear
+    params[:other_languages].each do |name|
+      language = Language.find_or_create_by_name(name)
+      @profile.linguistic_abilities.create language_id: language.id
     end
 
     if @profile.update_attributes(params[:profile]) && all_medialinks_saved_successfully

@@ -42,10 +42,13 @@
               <%= fields[:main_topic].html_safe %>
             </div>
           <% end %>
-
           <div class="group">
-            <label><%= t(:languages, scope: "profiles.speakerin") %></label>
-            <%= fields[:languages].html_safe %>
+            <label><%= t(:main_language, scope: "profiles.speakerin") %></label>
+            <%= fields[:main_language].html_safe %>
+          </div>
+           <div class="group">
+            <label><%= t(:other_languages, scope: "profiles.speakerin") %></label>
+            <%= fields[:other_languages].html_safe %>
           </div>
           <div class="group">
             <label><%= t(:city_region, scope: "profiles.speakerin") %></label>

@@ -182,7 +182,8 @@ de:
       firstname: "Vorname"
       lastname: "Nachname"
       main_topic: "Hauptthema"
-      languages: "Sprachen"
+      main_language: "Hauptsprache"
+      other_languages: "Andere Sprachen"
       city_region: "Stadt/Region"
       twitter: "Twitter"
       website: "Webseite"
@@ -193,6 +194,7 @@ de:
       password_confirmation: "Passwortwiederholung"
       topics: "Themen"
       more_topics: "Weitere Themen"
+      language_selection: "Wähle eine Sprache"
       medialinks: "Medialinks"
       link:
         add: "Medialink hinzufügen"
@@ -217,7 +219,8 @@ de:
       firstname: 'Vorname:'
       lastname: 'Nachname:'
       topics: 'Meine Themen:'
-      languages: "Meine Sprache/n:"
+      main_language: "Hauptsprache:"
+      other_languages: "Andere Sprachen"
       talks: "Vorträge gehalten über:"
       media: "Meine Vorträge:"
       bio: "Bio: "

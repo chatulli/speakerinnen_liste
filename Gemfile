@@ -29,6 +29,7 @@ gem 'mandrill-api'
 gem 'simple_form', '~> 2.0.0.rc'
 gem 'globalize', '~> 3.1.0'
 gem 'rack-piwik', '~> 0.3.0', require: 'rack/piwik'
+gem 'i18n_data', '~> 0.6.0'
 
 group :development do
   gem 'letter_opener'

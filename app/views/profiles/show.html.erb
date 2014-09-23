@@ -9,7 +9,8 @@
          twitter: valuelabel(@profile.twitter),
          website: valuelabel(@profile.website),
          email: valuelabel(@profile.email),
-         languages: valuelabel(@profile.languages),
+         main_language: valuelabel(Language.language_for(I18n.locale, @profile.main_language)),
+         other_languages: valuelabel(format_languages(@profile.other_languages)),
          firstname: valuelabel(@profile.firstname),
          lastname: valuelabel(@profile.lastname)
        }
@@ -17,3 +18,4 @@
 %>
 
 <%= render partial: 'contact/modalform', locals: {url: contact_profile_path(@profile), recipient: @profile.fullname} %>
+  

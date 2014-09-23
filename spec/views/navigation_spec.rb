@@ -38,7 +38,6 @@ describe "navigation" do
       it { should have_link('Admin', admin_root_path) }
 
       describe "access admin actions" do
-        #binding.pry
         before { click_on 'Admin' }
         #find(:xpath, "//a[contains(@href,'#{admin_root_path}')]").click
         it { should have_content('Administration') }
