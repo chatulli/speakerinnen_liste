@@ -42,7 +42,7 @@
         <hr>
 
         <h5><%= t(:main_language, scope: "profiles.profile") %></h5>
-        <span> <%= @profile.main_language %></span>
+        <span> <%= Language.language_for I18n.locale, @profile.language_as_code %></span>
         <hr>
 
         <h5><%= t(:other_languages, scope: "profiles.profile") %></h5>

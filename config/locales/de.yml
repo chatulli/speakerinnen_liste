@@ -243,21 +243,6 @@ de:
     index:
       title: "Speakerinnen*"
       text: "Keine Ausreden mehr für frauenlose Panels. Diese Liste ist work in progress – bei Wunsch auf Eintragung, bitte melden. Es wird empfohlen, sich die Liste einmal komplett durchzulesen, dann geht auch nichts verloren, denn manche Damen haben sehr spezielle und interessante Fachgebiete. Sie wollen schließlich ein tolles Event – und Sie wissen ja: dafür muss man sich auch ein bisschen Zeit nehmen :)"
-    new:
-      new_profile: "Neues Profil"
-      back: "Zurück"
-    show:
-      profile_from: "Profil von"
-      topics: "Meine Themen:"
-      languages: "Meine Sprache/n:"
-      talks: "Vorträge gehalten über:"
-      media: "Meine Vorträge:"
-      bio: "Bio:"
-      email: "E-mail:"
-      twitter: "Twitter:"
-      contact: "E-Mail an"
-      back: "Zurück"
-      edit: "Bearbeiten"
   flash:
     profiles:
       created: "Profil wurde erfolgreich erstellt."
@@ -274,19 +259,10 @@ de:
   activerecord:
     attributes:
       profile:
-        firstname: "Vorname"
-        lastname: "Nachname"
         bio: 'Deine Bio auf %{language}<br>
               <small>(Hier ist Platz für eine kurze oder auch längere Bio. Außerdem sollten hier Fachkenntnisse und mögliche Vortragsthemen genauer beschrieben werden. Das hilft Veranstalterinnen und Veranstaltern herauszufinden, ob Ihr die Richtigen für ihr Event sein könntet)</small>'
-        topic_list: "Deine Themen als Tags<br><small>(Bitte schaue zuerst, ob Dein Thema schon vorhanden ist)</small>"
         main_topic: "Dein Hauptthema<br>auf %{language}<small>
         <br>(Trage Dein Hauptthema hier nochmal ein. Dieses Thema wird mit Deinem Namen und Bild auf der Speakerinnen-Übersichtsseite zu sehen sein)</small>"
-        tag_list: "schon vorhandene Tags"
-        talks: "Vortragsthemen"
-        languages: "Sprachen<br><small>(Programmiersprachen bitte bei Themen angeben, nicht hier)</small>"
-        city: "Stadt"
-        twitter: "Twitter"
-        picture: "Bild"
         translation: "<strong>Hier kannst Du Dein Hauptthema und Deine Bio auf Deutsch und Englisch eintragen:</strong>"
       medialink:
         url: "URL:"

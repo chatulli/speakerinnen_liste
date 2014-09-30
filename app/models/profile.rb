@@ -20,7 +20,7 @@ class Profile < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :bio, :city, :email, :firstname, :main_language, :lastname, :picture, :twitter, :remove_picture, :talks, :website
+  attr_accessible :bio, :city, :email, :firstname, :language_as_code, :lastname, :picture, :twitter, :remove_picture, :talks, :website
   attr_accessible :content, :name, :topic_list, :media_url, :medialinks, :main_topic
   attr_accessible :translations_attributes
   attr_accessible :admin_comment
@@ -28,8 +28,10 @@ class Profile < ActiveRecord::Base
   acts_as_taggable_on :topics
 
   has_many :medialinks, order: 'position ASC'
-  has_many :linguistic_abilities
+  has_many :linguistic_abilities, conditions: {main: false}
   has_many :languages, through: :linguistic_abilities
+  has_one :main_linguistic_ability, conditions: {main: true}, class_name: "LinguisticAbility"
+  has_one :main_language, through: :main_linguistic_ability, source: :language
 
   before_save(on: [:create, :update]) do
     self.twitter.gsub!(/^@|https:|http:|:|\/\/|www.|twitter.com\//, '') if twitter
@@ -70,6 +72,7 @@ class Profile < ActiveRecord::Base
     main_topic.present? ? main_topic : topic_list.first
   end
 
+  #only used in admin/profiles/_form.html.erb
   def language(translation)
     if translation.object.locale == :en && I18n.locale == :de
       "Englisch"
@@ -117,6 +120,22 @@ class Profile < ActiveRecord::Base
   def other_languages
     self.languages.map do |lang| 
       lang.name 
+    end
+  end
+
+  def language_as_code
+    main_language_name
+  end
+
+  def main_language_name
+    main_language.name if main_language
+  end
+
+  def language_as_code=(new_code)
+    if new_code.present?
+      self.main_language = Language.find_or_create_by_name new_code
+    else
+      self.main_language = nil
     end
   end
 end

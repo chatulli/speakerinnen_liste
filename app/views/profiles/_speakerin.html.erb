@@ -43,7 +43,7 @@
             </div>
           <% end %>
           <div class="group">
-            <label><%= t(:main_language, scope: "profiles.speakerin") %></label>
+            <label class="mandatory"><%= t(:main_language, scope: "profiles.speakerin") %></label>
             <%= fields[:main_language].html_safe %>
           </div>
            <div class="group">
@@ -96,7 +96,7 @@
       <% if edit_permission && mode == :edit %>
         <div class="row">
           <% fields[:translatable_fields].each do |locale_sym, translation| %>
-            <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
               <div class='control-group'>
                 <%= translation[:bio][:hidden_field].html_safe %>
                 <%= translation[:bio][:label].html_safe %>
@@ -120,7 +120,7 @@
         <% if edit_permission && mode == :edit %>
           <div class="row">
             <% fields[:translatable_fields].each do |locale_sym, translation| %>
-              <div class="col-md-6 col-sm-12 col-xs-12">
+              <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class='control-group'>
                   <%= translation[:main_topic][:hidden_field].html_safe %>
                   <%= translation[:main_topic][:label].html_safe %>

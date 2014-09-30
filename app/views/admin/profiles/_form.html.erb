@@ -7,14 +7,15 @@
       <%= f.input :firstname %>
       <%= f.input :lastname %>
       <%= f.input :email %>
-      <%= f.input :main_language, 
+      <%= f.input :language_as_code, 
                   collection: Language::LANGUAGES_COLLECTION[I18n.locale], 
                   prompt:  t(:language_selection, scope: "profiles.speakerin"), 
                   label: t(:main_language, scope: "profiles.speakerin") %>
       <%= f.input :other_languages, 
                   collection: Language::LANGUAGES_COLLECTION[I18n.locale], 
                   input_html: { multiple: true, name: "other_languages[]" },
-                  label: t(:other_languages, scope: "profiles.speakerin") %>          
+                  label: t(:other_languages, scope: "profiles.speakerin"),
+                  include_blank: true %>          
       <%= f.input :city %>
       <%= f.input :twitter %>
       <%= f.input :website, placeholder: "http://" %>

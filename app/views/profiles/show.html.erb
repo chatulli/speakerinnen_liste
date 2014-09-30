@@ -9,7 +9,7 @@
          twitter: valuelabel(@profile.twitter),
          website: valuelabel(@profile.website),
          email: valuelabel(@profile.email),
-         main_language: valuelabel(Language.language_for(I18n.locale, @profile.main_language)),
+         main_language: valuelabel(Language.language_for(I18n.locale, @profile.language_as_code)),
          other_languages: valuelabel(format_languages(@profile.other_languages)),
          firstname: valuelabel(@profile.firstname),
          lastname: valuelabel(@profile.lastname)

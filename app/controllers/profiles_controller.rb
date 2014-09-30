@@ -70,11 +70,14 @@ class ProfilesController < ApplicationController
     end
 
     @profile.linguistic_abilities.clear
-    params[:other_languages].each do |name|
-      language = Language.find_or_create_by_name(name)
-      @profile.linguistic_abilities.create language_id: language.id
+    if params[:other_languages]
+      params[:other_languages].each do |name| 
+        if name.present?
+          language = Language.find_or_create_by_name(name)
+          @profile.linguistic_abilities.create language_id: language.id
+        end
+      end
     end
-
     if @profile.update_attributes(params[:profile]) && all_medialinks_saved_successfully
       redirect_to @profile, notice: (I18n.t("flash.profiles.updated"))
     else current_profile

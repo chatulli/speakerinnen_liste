@@ -16,15 +16,17 @@
         css_class = 'valuelabel'+(mandatory_translated_items[item] ? ' mandatory' : '')
         translatable_fields[locale_sym][item] = {
             hidden_field: translation.hidden_field(:locale),
-            label: translation.label(item, t(locale_sym, scope: "languages"), class: css_class)
-
+            label: translation.label(item, Language.language_for(I18n.locale, @profile.main_language), class: css_class)
         }
+
         if input_field_type == :text_area
           translatable_fields[locale_sym][item][:input_field] = translation.text_area(item, rows: 15, class: 'form-control')
         elsif
           translatable_fields[locale_sym][item][:input_field] = translation.text_field(item, class: 'form-control')
         end
       end
+
+
 
     end
   %>
@@ -39,14 +41,15 @@
            twitter:            f.text_field(:twitter,    class: 'form-control', value: @profile.twitter),
            website:            f.text_field(:website,    class: 'form-control', value: @profile.website),
            email:              f.text_field(:email,      class: 'form-control', value: @profile.email),
-           main_language:      f.select(:main_language, 
+           main_language:      f.select(:language_as_code,
                                  Language::LANGUAGES_COLLECTION[I18n.locale],
                                  class: 'form-control',
                                  prompt: t(:language_selection, scope: "profiles.speakerin")),
            other_languages:    select_tag(:other_languages, 
                                  options_for_select(Language::LANGUAGES_COLLECTION[I18n.locale], f.object.other_languages),
                                  class: 'form-control',
-                                 multiple: true),
+                                 multiple: true,
+                                 prompt: t(:language_selection, scope: "profile.speaekerin")),
            firstname:          f.text_field(:firstname,  class: 'form-control', value: @profile.firstname),
            lastname:           f.text_field(:lastname,   class: 'form-control', value: @profile.lastname),
            picture:            f.file_field(:picture,    class:"btn btn-default"),
